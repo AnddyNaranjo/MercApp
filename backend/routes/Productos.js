@@ -16,7 +16,7 @@ router.get('/', controller.getProductos);
 // UPDATE 
 router.put(
   '/:id',
-  upload.single('imagen'), // 👈 agregar esto
+  upload.single('imagen'), //agregar esto
   controller.updateProducto
 );
 

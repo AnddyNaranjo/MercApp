@@ -1,8 +1,10 @@
+<!-- eslint-disable @typescript-eslint/no-explicit-any -->
 
 <script setup lang="ts">
 import { onMounted, ref, computed, watch } from 'vue';
 import { useProductos } from '../composable/useProductos';
 import type { Producto } from '@/types/Producto';
+const emit = defineEmits(['editarProducto']);
 
 // recibes el buscar
 const props = defineProps<{
@@ -29,6 +31,14 @@ const productosFiltrados = computed(() => {
     p.nombre.toLowerCase().includes(props.buscar.toLowerCase())
   );
 });
+
+
+
+const cargarProducto = (prod: Producto) => {
+  console.log('Producto a editar:', prod.categoriaID);
+  emit('editarProducto', prod);
+};
+
 </script>
 
 
@@ -44,6 +54,7 @@ const productosFiltrados = computed(() => {
       <th scope="col">Descripcion</th>
       <th scope="col">Imagen</th>
       <th scope="col">Categoria</th>
+      <th scope="col">Acciones</th>
     </tr>
   </thead>
   <tbody>
@@ -59,6 +70,11 @@ const productosFiltrados = computed(() => {
 />
       </td>
       <td>{{ p.categoriaID?.nombre }}</td>
+      <td>
+        <button class="btn btn-warning" @click="cargarProducto(p)">
+  Editar
+</button>
+      </td>
     </tr>
   </tbody>
 </table>

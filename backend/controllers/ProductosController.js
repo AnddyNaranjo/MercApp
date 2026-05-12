@@ -35,6 +35,7 @@ exports.getProductos = async (req, res) => {
 // UPDATE
 exports.updateProducto = async (req, res) => {
   try {
+    // ✅ Construir objeto solo con los campos que se envían
     let data = {
       nombre: req.body.nombre,
       precio: req.body.precio,
@@ -43,16 +44,26 @@ exports.updateProducto = async (req, res) => {
       categoriaID: req.body.categoriaID
     };
 
-    // 👇 si viene imagen nueva
+    // 👇 si viene imagen nueva, agregarla
     if (req.file) {
       data.imagen = `/uploads/${req.file.filename}`;
     }
+
+    // ✅ Eliminar propiedades undefined
+    Object.keys(data).forEach(key => {
+      if (data[key] === undefined) {
+        delete data[key];
+      }
+    });
+
+    console.log('ID recibido:', req.params.id);
+    console.log('Datos a actualizar:', data);
 
     const productoActualizado = await Producto.findByIdAndUpdate(
       req.params.id,
       data,
       {
-        new: true,
+        returnDocument: 'after',
         runValidators: true
       }
     );
@@ -64,19 +75,21 @@ exports.updateProducto = async (req, res) => {
       });
     }
 
+    console.log('Producto actualizado:', productoActualizado);
+
     res.json({
       success: true,
       producto: productoActualizado
     });
 
   } catch (error) {
+    console.error('Error al actualizar:', error);
     res.status(400).json({
       success: false,
       message: error.message
     });
   }
 };
-``
 
 // DELETE
 exports.deleteProducto = async (req, res) => {

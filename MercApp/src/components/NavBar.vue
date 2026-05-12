@@ -5,7 +5,7 @@
       <form class="d-flex">
         <div>
           <button
-            class="btn btn-primary"
+            class="btn btn-primary me-2"
             type="button"
             data-bs-toggle="modal"
             data-bs-target="#modalCategoria"
@@ -15,7 +15,7 @@
         </div>
         <div>
           <button
-            class="btn btn-primary"
+            class="btn btn-primary me-2"
             type="button"
             data-bs-toggle="modal"
             data-bs-target="#modalProducto"
@@ -27,7 +27,7 @@
           <input
             class="form-control me-2"
             type="search"
-            placeholder="Search"
+            placeholder="Buscar producto"
             aria-label="Search"
             v-model="buscar"
           />

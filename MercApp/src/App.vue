@@ -1,3 +1,4 @@
+<!-- eslint-disable @typescript-eslint/no-explicit-any -->
 
 <template>
   <div class="container-fluid">
@@ -6,7 +7,8 @@
 </div>
 <div>
 <h1>Tabla de Productos</h1>
-<TablaProductos  :buscar="buscar" :recargar="recargar"/>
+<TablaProductos  :buscar="buscar" :recargar="recargar" @editarProducto="abrirEditar"/>
+<ModalProducto ref="modalRef" />
 </div>
 </div>
 </template>
@@ -15,12 +17,21 @@
 import { ref } from 'vue'
 import TablaProductos from './components/TablaProductos.vue'
 import NavBar from './components/NavBar.vue'
+import ModalProducto from './components/ModalProducto.vue';
+
 
 const recargar = ref(0);
 const buscar = ref('');
-
+const modalRef = ref();
 const onProductoCreado = () => {
   recargar.value++;
+};
+
+
+const abrirEditar = (prod:any) => {
+  console.log('Producto recibido en App.vue:', prod);
+  modalRef.value.cargarProducto(prod);
+  console.log('Producto cargado en ModalProducto:', modalRef.value.producto);
 };
 
 </script>

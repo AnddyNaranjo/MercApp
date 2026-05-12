@@ -4,8 +4,8 @@ export interface Producto {
   precio: number;
   stock?: number;
   descripcion?: string;
-  imagen?: string;
-  categoriaID?: string;
+ imagen: string | File | null;
+   categoriaID?: string;
 }
 
 
