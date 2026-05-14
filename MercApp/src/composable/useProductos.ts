@@ -62,10 +62,18 @@ const actualizarProducto = async (producto: any) => {
   return res.data;
 };
 
+const eliminarProducto = async (id: string) => {
+  console.log("ID a eliminar:", id);
+  const res = await axios.delete(`${API}/${id}`);
+  console.log('Respuesta del servidor:', res.data);
+  return res.data;
+}
+
 
   return {
     getProductos,
     crearProducto,
-    actualizarProducto
+    actualizarProducto,
+    eliminarProducto
   };
 };

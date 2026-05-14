@@ -1,13 +1,13 @@
 <!-- eslint-disable @typescript-eslint/no-explicit-any -->
 <script setup lang="ts">
-import { onMounted, ref, nextTick } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useProductos } from '@/composable/useProductos';
 import { useCategorias } from '@/composable/useCategorias';
 import type { Categoria } from '@/types/Categoria';
 import { Modal } from 'bootstrap';
 import type { Producto, ProductoCreate } from '@/types/Producto';
 
-const emit = defineEmits(['productoCreado']);
+const emit = defineEmits(['productoCreado', 'productoEliminado', 'productoActualizado']);
 const { crearProducto: apiCrearProducto, actualizarProducto } = useProductos();
 
 const modo = ref<'crear' | 'editar'>('crear');
@@ -20,13 +20,18 @@ const productoId = ref<string | null>(null);
 const categorias = ref<Categoria[]>([]);
 const { getCategorias } = useCategorias();
 
+
 onMounted(async () => {
   categorias.value = await getCategorias();
-  
-  if (modalElement.value) {
-    modalInstance.value = new Modal(modalElement.value);
-  }
+
+  modalInstance.value = new Modal(modalElement.value as HTMLElement);
+
+  // 👇 AQUÍ ESTÁ LA CLAVE
+  modalElement.value?.addEventListener('hidden.bs.modal', () => {
+    limpiarFormulario();
+  });
 });
+
 
 const producto = ref<Producto | ProductoCreate>({
   nombre: '',
@@ -41,28 +46,7 @@ const onFileChange = (e: any) => {
   producto.value.imagen = e.target.files[0];
 };
 
-const crearProducto = async () => {
-  console.log('Guardando - Modo actual:', modo.value);
-  console.log('Datos:', producto.value);
-
-  if (modo.value === 'crear') {
-    console.log('CREANDO');
-    await apiCrearProducto(producto.value as ProductoCreate);
-  } else {
-    console.log('ACTUALIZANDO');
-    //Crear objeto con el ID para actualizar
-    const productoActualizar: Producto = {
-      ...producto.value,
-      _id: productoId.value || '' // Agregar el ID
-    } as Producto;
-    
-    console.log('Producto a actualizar:', productoActualizar);
-    await actualizarProducto(productoActualizar);
-  }
-  
-  emit('productoCreado');
-
-  // Limpiar
+const limpiarFormulario = () => {
   producto.value = {
     nombre: '',
     precio: 0,
@@ -71,40 +55,45 @@ const crearProducto = async () => {
     imagen: null,
     categoriaID: ''
   };
-  
-  productoId.value = null; // Limpiar ID
-  modo.value = 'crear';
 
-  if (modalInstance.value) {
-    modalInstance.value.hide();
-  }
-  
-  setTimeout(() => {
-    const backdrop = document.querySelector('.modal-backdrop');
-    backdrop?.remove();
-  }, 150);
+  productoId.value = null;
+  modo.value = 'crear';
 };
 
-const cargarProducto = async (prod: Producto) => {
-  console.log('1. Iniciando cargarProducto con:', prod);
+const crearProducto = async () => {
+ 
+  if (modo.value === 'crear') {
+    await apiCrearProducto(producto.value as ProductoCreate);
+  } else {
+    const productoActualizar: Producto = {
+      ...producto.value,
+      _id: productoId.value || ''
+    } as Producto;
+    
+    await actualizarProducto(productoActualizar);
+  }
   
-  // Cerrar el modal si está abierto
+  emit('productoCreado');
+  emit('productoActualizado')
+
+
+  productoId.value = null;
+  modo.value = 'crear';
+
+  // Cerrar modal (el listener se encarga de la limpieza)
   if (modalInstance.value) {
     modalInstance.value.hide();
   }
+};
+
+
+const cargarProducto = async (prod: Producto) => {
   
-  // Esperar a que se cierre
-  await nextTick();
-  await new Promise(resolve => setTimeout(resolve, 300));
-  
-  // ✅ Guardar el ID del producto
+  // Guardar el ID del producto
   productoId.value = prod._id || null;
-  console.log('ID guardado:', productoId.value);
   
   // Cambiar el modo
-  modo.value = 'editar';
-  console.log('2. Modo cambiado a:', modo.value);
-  
+  modo.value = 'editar';  
   // Cargar los datos
   producto.value = {
     nombre: prod.nombre,
@@ -115,21 +104,26 @@ const cargarProducto = async (prod: Producto) => {
     imagen: null
   };
   
-  console.log('3. Producto cargado:', producto.value);
-  console.log('4. Modo actual:', modo.value);
   
-  // Esperar a que Vue actualice el DOM
-  await nextTick();
-  
-  // Mostrar el modal
+  // Mostrar el modal directamente sin cerrarlo primero
   if (modalElement.value && modalInstance.value) {
-    console.log('5. Mostrando modal en modo:', modo.value);
     modalInstance.value.show();
   }
 };
 
+
+
+const abrirModal = () => {
+  if (modalInstance.value) {
+    modalInstance.value.show();
+  }
+};
+
+
+
 defineExpose({
   cargarProducto,
+  abrirModal,
   producto,
   modo
 });
@@ -163,7 +157,7 @@ defineExpose({
                 {{ categoria.nombre }}
               </option>
             </select>
-
+            
             <input type="file" class="form-control mb-2" @change="onFileChange" />
 
             <button class="btn btn-success" type="submit">

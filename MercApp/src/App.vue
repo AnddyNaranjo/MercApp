@@ -1,52 +1,65 @@
-<!-- eslint-disable @typescript-eslint/no-explicit-any -->
-
 <template>
-  <div class="container-fluid">
-<div>
-<NavBar v-model:buscar="buscar" @productoCreado="onProductoCreado" />
-</div>
-<div>
-<h1>Tabla de Productos</h1>
-<TablaProductos  :buscar="buscar" :recargar="recargar" @editarProducto="abrirEditar"/>
-<ModalProducto ref="modalRef" />
-</div>
-</div>
+  <div>
+    <NavBar @update:buscar="actualizarBusqueda" />
+
+    <!-- AQUÍ se renderizan las páginas -->
+    <router-view 
+      :buscar="buscar" 
+      :recargar="recargar"
+      @editarProducto="abrirEditar"
+      @eliminarProducto="manejarProductoEliminado"
+      @categoriaCreada="onCategoriaCreada"
+     @nuevoProducto="modalRef.abrirModal()"
+    />
+
+    <ModalProducto 
+      ref="modalRef" 
+      @productoCreado="onProductoCreado"
+    />
+  </div>
 </template>
+
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import TablaProductos from './components/TablaProductos.vue'
 import NavBar from './components/NavBar.vue'
-import ModalProducto from './components/ModalProducto.vue';
+import ModalProducto from './components/ModalProducto.vue'
+import { useProductos } from '@/composable/useProductos'
 
 
 const recargar = ref(0);
 const buscar = ref('');
 const modalRef = ref();
+
+const { eliminarProducto: apiEliminarProducto } = useProductos();
+
+const actualizarBusqueda = (valor: string) => {
+  buscar.value = valor;
+};
+
 const onProductoCreado = () => {
   recargar.value++;
 };
 
-
-const abrirEditar = (prod:any) => {
-  console.log('Producto recibido en App.vue:', prod);
-  modalRef.value.cargarProducto(prod);
-  console.log('Producto cargado en ModalProducto:', modalRef.value.producto);
+const onCategoriaCreada = () => {
+  recargar.value++;
 };
 
+
+const abrirEditar = (prod: any) => {
+  if (modalRef.value) {
+    modalRef.value.cargarProducto(prod);
+  }
+};
+
+
+const manejarProductoEliminado = async (productoId: string) => {
+  try {
+    await apiEliminarProducto(productoId);
+    recargar.value++;
+  } catch (error) {
+    console.error('Error al eliminar producto:', error);
+    alert('Error al eliminar el producto');
+  }
+};
 </script>
-
-
-
-<style scoped>
-.saludo {
-  max-width: 300px;
-  margin: 2rem auto;
-  text-align: center;
-}
-input {
- margin-top: 1rem;
- padding: 0.5rem;
- font-size: 1rem;
-}
-</style>

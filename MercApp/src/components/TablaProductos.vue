@@ -4,7 +4,7 @@
 import { onMounted, ref, computed, watch } from 'vue';
 import { useProductos } from '../composable/useProductos';
 import type { Producto } from '@/types/Producto';
-const emit = defineEmits(['editarProducto']);
+const emit = defineEmits(['editarProducto', 'eliminarProducto']);
 
 // recibes el buscar
 const props = defineProps<{
@@ -35,22 +35,31 @@ const productosFiltrados = computed(() => {
 
 
 const cargarProducto = (prod: Producto) => {
-  console.log('Producto a editar:', prod.categoriaID);
   emit('editarProducto', prod);
+};
+
+const eliminarProducto = (prod: Producto) => {
+  console.log('Producto a eliminar:', prod._id);
+  if (confirm(`¿Estás seguro de eliminar "${prod.nombre}"?`)) {
+    emit('eliminarProducto', prod._id); // Emitir solo el ID
+  }
 };
 
 </script>
 
 
 <template>
-  <div>
-    <h2>Productos</h2>
+  <div class="card">
+     <div class="card-header text-center">
+   <h5>Productos</h5> 
+  </div>
     <div>
       <table class="table table-striped">
   <thead>
     <tr>
       <th scope="col">Nombre del Producto</th>
       <th scope="col">Precio</th>
+      <th scope="col">Stock</th>
       <th scope="col">Descripcion</th>
       <th scope="col">Imagen</th>
       <th scope="col">Categoria</th>
@@ -61,6 +70,7 @@ const cargarProducto = (prod: Producto) => {
     <tr v-for="p in productosFiltrados" :key="p._id">
       <th scope="row" >{{ p.nombre}}</th>
       <td>{{ p.precio }}</td>
+      <td>{{ p.stock }}</td>
       <td>{{ p.descripcion }}</td>
       <td>
         <img
@@ -71,13 +81,20 @@ const cargarProducto = (prod: Producto) => {
       </td>
       <td>{{ p.categoriaID?.nombre }}</td>
       <td>
-        <button class="btn btn-warning" @click="cargarProducto(p)">
+      <div class="d-flex">
+<button class="btn btn-warning me-2" @click="cargarProducto(p)">
   Editar
 </button>
+<button class="btn btn-danger" @click="eliminarProducto(p)">
+  Eliminar
+</button>
+      </div>
       </td>
     </tr>
   </tbody>
 </table>
     </div>
   </div>
+ 
+  
 </template>

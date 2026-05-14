@@ -1,63 +1,58 @@
 <template>
-  <nav class="navbar bg-body-tertiary">
-    <div class="container-fluid">
-      <a class="navbar-brand">MercApp</a>
-      <form class="d-flex">
-        <div>
-          <button
-            class="btn btn-primary me-2"
-            type="button"
-            data-bs-toggle="modal"
-            data-bs-target="#modalCategoria"
-          >
-            Nuevo Categoría
-          </button>
-        </div>
-        <div>
-          <button
-            class="btn btn-primary me-2"
-            type="button"
-            data-bs-toggle="modal"
-            data-bs-target="#modalProducto"
-          >
-            Nuevo Producto
-          </button>
-        </div>
-        <div role="search">
-          <input
-            class="form-control me-2"
-            type="search"
-            placeholder="Buscar producto"
-            aria-label="Search"
-            v-model="buscar"
-          />
-        </div>
-      </form>
-    </div>
-  </nav>
-  
-  <ModalProducto @productoCreado="emit('productoCreado')" />
-  <ModalCategoria @categoriaCreada="emit('categoriaCreada')" />
+  <div class="container-fluid">
+    <!-- Tabs de navegación -->
+    <div class="mt-3">
+      <nav class="navbar navbar-expand-lg bg-body-tertiary">
+         <div class="container-fluid">
 
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+               <a class="navbar-brand">MercApp</a>
+
+
+          
+<router-link to="/home" class="nav-link" active-class="active">
+  Home
+</router-link>
+
+<router-link to="/productos" class="nav-link" active-class="active">
+  Tabla de Productos
+</router-link>
+
+<router-link to="/categorias" class="nav-link" active-class="active">
+  Categorías
+</router-link>
+
+</div>
+            
+          <div class="input-group" style="max-width: 300px;">
+          <span class="input-group-text">🔍</span>
+          <input 
+            v-model="buscar" 
+            type="search" 
+            class="form-control" 
+            placeholder="Buscar producto..."
+          >
+        </div>
+        
+      </div>
+      </nav>
+    </div>
+    
+ 
+
+  </div>
 </template>
 
 <script setup lang="ts">
 import { ref, watch } from "vue";
-import ModalProducto from './ModalProducto.vue';
-import ModalCategoria from './ModalCategoria.vue';
-const emit = defineEmits([
-  'productoCreado',
-  'categoriaCreada',
-  'update:buscar'
-]);
+
+const emit = defineEmits(['update:buscar']);
+
 const buscar = ref("");
 
-// cada vez que cambia, lo manda al padre
+// Emitir búsqueda al padre
 watch(buscar, (value) => {
   emit("update:buscar", value);
 });
-
-
-
-
 </script>
+
