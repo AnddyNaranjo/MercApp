@@ -25,6 +25,7 @@ import { ref } from 'vue'
 import NavBar from './components/NavBar.vue'
 import ModalProducto from './components/ModalProducto.vue'
 import { useProductos } from '@/composable/useProductos'
+import type { Producto } from './types/Producto';
 
 
 const recargar = ref(0);
@@ -46,7 +47,7 @@ const onCategoriaCreada = () => {
 };
 
 
-const abrirEditar = (prod: any) => {
+const abrirEditar = (prod: Producto) => {
   if (modalRef.value) {
     modalRef.value.cargarProducto(prod);
   }

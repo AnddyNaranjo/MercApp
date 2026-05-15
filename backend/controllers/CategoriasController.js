@@ -5,7 +5,6 @@ const Categoria = require('../models/Categoria');
 
 exports.createCategoria = async (req, res) => {
     
-  console.log("Aqui llega este dato ya que nose doned estya",req.body); // 👀 para debug
 
   try {
     const categoria = new Categoria({

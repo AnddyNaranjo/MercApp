@@ -26,4 +26,9 @@ router.delete(
   controller.deleteProducto
 );
 
+router.patch(
+  '/:id/stock',
+  controller.updateStockProducto
+);
+
 module.exports = router;

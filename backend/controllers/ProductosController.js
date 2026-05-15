@@ -56,8 +56,6 @@ exports.updateProducto = async (req, res) => {
       }
     });
 
-    console.log('ID recibido:', req.params.id);
-    console.log('Datos a actualizar:', data);
 
     const productoActualizado = await Producto.findByIdAndUpdate(
       req.params.id,
@@ -74,8 +72,6 @@ exports.updateProducto = async (req, res) => {
         message: "Producto no encontrado"
       });
     }
-
-    console.log('Producto actualizado:', productoActualizado);
 
     res.json({
       success: true,
@@ -98,5 +94,50 @@ exports.deleteProducto = async (req, res) => {
     res.json({ success: true });
   } catch {
     res.status(500).json({ success: false });
+  }  
+};
+
+// UPDATE STOCK
+exports.updateStockProducto = async (req, res) => {
+  try {
+
+    const { stock } = req.body;
+
+    const productoActualizado =
+      await Producto.findByIdAndUpdate(
+
+        req.params.id,
+
+        { stock },
+
+        {
+  returnDocument: 'after',
+          runValidators: true
+        }
+
+      );
+
+    if (!productoActualizado) {
+
+      return res.status(404).json({
+        success: false,
+        message: 'Producto no encontrado'
+      });
+
+    }
+
+    res.json({
+      success: true,
+      producto: productoActualizado
+    });
+
+  } catch (error) {
+
+    res.status(400).json({
+      success: false,
+      message: error.message
+    });
+
   }
+
 };

@@ -31,8 +31,12 @@
             type="search" 
             class="form-control" 
             placeholder="Buscar producto..."
+            data-bs-toggle="popover" 
+  data-bs-trigger="focus" 
+  data-bs-content="Se puede buscar por nombre, categoría o descripción del producto"
           >
         </div>
+        
         
       </div>
       </nav>
@@ -44,8 +48,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
-
+import { onMounted, ref, watch } from "vue";
+import * as bootstrap from 'bootstrap';
 const emit = defineEmits(['update:buscar']);
 
 const buscar = ref("");
@@ -54,5 +58,10 @@ const buscar = ref("");
 watch(buscar, (value) => {
   emit("update:buscar", value);
 });
+
+onMounted(() => {
+  const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+  popoverTriggerList.map(el => new bootstrap.Popover(el))
+})
 </script>
 

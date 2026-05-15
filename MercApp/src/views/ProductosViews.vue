@@ -14,7 +14,9 @@ defineEmits(['editarProducto', 'eliminarProducto', 'nuevoProducto'])
       class="btn btn-primary mb-3"
      @click="$emit('nuevoProducto')"
     >
-      + Nuevo Producto
+      <i class="bi bi-plus-circle me-1"></i>
+
+      Agregar Nuevo Producto
     </button>
 </div>
   <TablaProductos

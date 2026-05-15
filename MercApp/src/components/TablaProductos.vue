@@ -27,8 +27,12 @@ onMounted(async () => {
 
 // FILTRO EN TIEMPO REAL
 const productosFiltrados = computed(() => {
+  const texto = props.buscar.toLowerCase();
+
   return productos.value.filter(p =>
-    p.nombre.toLowerCase().includes(props.buscar.toLowerCase())
+    p.nombre?.toLowerCase().includes(texto) ||
+    p.descripcion?.toLowerCase().includes(texto) ||
+    p.categoriaID?.nombre?.toLowerCase().includes(texto)
   );
 });
 

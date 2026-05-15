@@ -6,6 +6,7 @@ const path = require('path');
 const cors = require('cors');
 
 const app = express();
+const productos = require('./controllers/ProductosCategoriasAutomaticos');
 
 
 //cors Permitir solicitudes desde el frontend
@@ -30,6 +31,8 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/productos', productosRoutes);
 
 app.use('/api/categorias', categoriasRoutes);
+
+productos(); // Ejecutar función para crear admin automáticamente
 
 const PORT = 3000;
 app.listen(PORT, () => {
