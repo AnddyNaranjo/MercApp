@@ -25,9 +25,11 @@ https://github.com/AnddyNaranjo/MercApp.git
 
 🌐 Rutas principales
 
-http://localhost:5173/home
-http://localhost:5173/productos
-http://localhost:5173/categorias
+- http://localhost:5173/home
+
+- http://localhost:5173/productos
+
+- http://localhost:5173/categorias
 
 ### 🏠 Página de Inicio (`/home`)
 - Visualización de productos en formato **cards**
