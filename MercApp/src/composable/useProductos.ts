@@ -2,7 +2,7 @@
 import type { Producto, ProductoCreate } from '@/types/Producto';
 import axios from 'axios';
 
-const API = 'http://localhost:3000/api/productos';
+const API = `${import.meta.env.VITE_API_URL}/productos`;
 
 export const useProductos = () => {
 

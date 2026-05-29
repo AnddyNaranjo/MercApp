@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MercApp - Micrositio</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background: #f4f6f9;
+      color: #333;
+    }
+    h1, h2 {
+      color: #2c3e50;
+    }
+    section {
+      margin-bottom: 30px;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    a {
+      color: #3498db;
+      text-decoration: none;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ddd;
+    }
+    th {
+      background: #2c3e50;
+      color: white;
+    }
+    code {
+      background: #eee;
+      padding: 5px;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>MercApp 🚀</h1>
+  <p>Micrositio del proyecto desplegado (Unidad 3)</p>
+
+  <section>
+    <h2>Resumen técnico</h2>
+    <p>
+      MercApp es una aplicación web SPA desarrollada con Vue 3 en el frontend
+      y Node.js con Express en el backend. La base de datos se encuentra en MongoDB Atlas.
+    </p>
+  </section>
+
+  <section>
+    <h2>Arquitectura de despliegue</h2>
+    <ul>
+      <li>Frontend: Netlify</li>
+      <li>Backend: Railway</li>
+      <li>Base de datos: MongoDB Atlas</li>
+      <li>Documentación: GitHub Pages</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Enlaces del proyecto</h2>
+    <ul>
+      <li><a href="https://TU-FRONTEND.netlify.app" target="_blank">Frontend (Netlify)</a></li>
+      <li><a href="https://TU-BACKEND.up.railway.app/api/health" target="_blank">API (Railway)</a></li>
+      <li><a href="https://github.com/TU-USUARIO/TU-REPO" target="_blank">Repositorio GitHub</a></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Ejecución local</h2>
+    <code>
+git clone https://github.com/TU-USUARIO/TU-REPO.git
+
+# Backend
+cd backend
+npm install
+npm run dev
+
+# Frontend
+cd ../MercApp
+npm install
+npm run dev
+    </code>
+  </section>
+
+  <section>
+    <h2>Endpoints principales</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Método</th>
+          <th>Ruta</th>
+          <th>Descripción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>GET</td>
+          <td>/api/health</td>
+          <td>Verifica el estado de la API</td>
+        </tr>
+        <tr>
+          <td>GET</td>
+          <td>/api/productos</td>
+          <td>Obtiene todos los productos</td>
+        </tr>
+        <tr>
+          <td>POST</td>
+          <td>/api/productos</td>
+          <td>Crea un producto</td>
+        </tr>
+        <tr>
+          <td>GET</td>
+          <td>/api/categorias</td>
+          <td>Obtiene todas las categorías</td>
+        </tr>
+        <tr>
+          <td>POST</td>
+          <td>/api/categorias</td>
+          <td>Crea una categoría</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+</body>
+</html>

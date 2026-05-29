@@ -9,7 +9,7 @@ interface ItemCarrito {
 }
 
 const carrito = ref<ItemCarrito[]>([])
-const API = 'http://localhost:3000/api/productos';
+const API = `${import.meta.env.VITE_API_URL}/productos`;
 
 export function useCarrito() {
 
