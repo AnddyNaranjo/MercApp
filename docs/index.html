@@ -1,138 +1,46 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MercApp - Micrositio</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 40px;
-      background: #f4f6f9;
-      color: #333;
-    }
-    h1, h2 {
-      color: #2c3e50;
-    }
-    section {
-      margin-bottom: 30px;
-      padding: 20px;
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    a {
-      color: #3498db;
-      text-decoration: none;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-    }
-    th, td {
-      padding: 10px;
-      border: 1px solid #ddd;
-    }
-    th {
-      background: #2c3e50;
-      color: white;
-    }
-    code {
-      background: #eee;
-      padding: 5px;
-      display: block;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>MercApp - Documentación del Proyecto</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; max-width: 800px; margin: 40px auto; padding: 20px; color: #333; }
+        .card { border: 1px solid #ddd; border-radius: 8px; padding: 20px; margin-top: 20px; background-color: #f9f9f9; }
+        .status { color: green; font-weight: bold; }
+        a { color: #007bff; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+    </style>
 </head>
 <body>
+    <h1>Proyecto Final: MercApp 🚀</h1>
+    <p>Este es el micrositio de acceso directo al proyecto desarrollado para la Unidad 3.</p>
 
-  <h1>MercApp 🚀</h1>
-  <p>Micrositio del proyecto desplegado (Unidad 3)</p>
+    <div class="card">
+        <h3>🔗 Enlaces del Proyecto</h3>
+        <ul>
+            <li><strong>Frontend (Netlify):</strong> <a href="https://frontmercapp.netlify.app" target="_blank">frontmercapp.netlify.app</a> <span class="status">● Online</span></li>
+            <li><strong>Backend API (Railway):</strong> <a href="https://mercapp-production-f1ce.up.railway.app/api/health" target="_blank">mercapp-production-f1ce.up.railway.app</a> <span class="status">● Online</span></li>
+        </ul>
+    </div>
 
-  <section>
-    <h2>Resumen técnico</h2>
-    <p>
-      MercApp es una aplicación web SPA desarrollada con Vue 3 en el frontend
-      y Node.js con Express en el backend. La base de datos se encuentra en MongoDB Atlas.
-    </p>
-  </section>
+    <div class="card">
+        <h3>🛠️ Tecnologías utilizadas</h3>
+        <ul>
+            <li><strong>Frontend:</strong> Vue 3, Vite, Axios.</li>
+            <li><strong>Backend:</strong> Node.js, Express, Mongoose.</li>
+            <li><strong>Base de Datos:</strong> MongoDB Atlas (Cloud).</li>
+        </ul>
+    </div>
 
-  <section>
-    <h2>Arquitectura de despliegue</h2>
-    <ul>
-      <li>Frontend: Netlify</li>
-      <li>Backend: Railway</li>
-      <li>Base de datos: MongoDB Atlas</li>
-      <li>Documentación: GitHub Pages</li>
-    </ul>
-  </section>
+    <div class="card">
+        <h3>📑 Endpoints de la API</h3>
+        <ul>
+            <li><code>GET /api/productos</code> - Listar productos</li>
+            <li><code>GET /api/categorias</code> - Listar categorías</li>
+            <li><code>GET /api/health</code> - Estado del servidor</li>
+        </ul>
+    </div>
 
-  <section>
-    <h2>Enlaces del proyecto</h2>
-    <ul>
-      <li><a href="https://TU-FRONTEND.netlify.app" target="_blank">Frontend (Netlify)</a></li>
-      <li><a href="https://TU-BACKEND.up.railway.app/api/health" target="_blank">API (Railway)</a></li>
-      <li><a href="https://github.com/TU-USUARIO/TU-REPO" target="_blank">Repositorio GitHub</a></li>
-    </ul>
-  </section>
-
-  <section>
-    <h2>Ejecución local</h2>
-    <code>
-git clone https://github.com/TU-USUARIO/TU-REPO.git
-
-# Backend
-cd backend
-npm install
-npm run dev
-
-# Frontend
-cd ../MercApp
-npm install
-npm run dev
-    </code>
-  </section>
-
-  <section>
-    <h2>Endpoints principales</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Método</th>
-          <th>Ruta</th>
-          <th>Descripción</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>GET</td>
-          <td>/api/health</td>
-          <td>Verifica el estado de la API</td>
-        </tr>
-        <tr>
-          <td>GET</td>
-          <td>/api/productos</td>
-          <td>Obtiene todos los productos</td>
-        </tr>
-        <tr>
-          <td>POST</td>
-          <td>/api/productos</td>
-          <td>Crea un producto</td>
-        </tr>
-        <tr>
-          <td>GET</td>
-          <td>/api/categorias</td>
-          <td>Obtiene todas las categorías</td>
-        </tr>
-        <tr>
-          <td>POST</td>
-          <td>/api/categorias</td>
-          <td>Crea una categoría</td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
-
+    <p><small>Desarrollado por: Anddy - 2026</small></p>
 </body>
 </html>
